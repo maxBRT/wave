@@ -16,6 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Spinner } from "@/components/ui/spinner"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Plus } from "lucide-react"
 
 interface SubscriptionFormProps {
   onSuccess?: () => void
@@ -54,99 +57,151 @@ export function SubscriptionForm({ onSuccess, className }: SubscriptionFormProps
   }
 
   return (
-    <form onSubmit={handleSubmit} className={cn("space-y-6", className)}>
-      {error && (
-        <div className="rounded-lg border border-destructive bg-destructive/10 px-4 py-3 text-sm text-destructive">
-          {error}
+    <Card className="rotate-1">
+      <CardHeader className="pb-4">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-3xl font-bold text-accent/80">01</span>
+          <div className="flex-1">
+            <CardTitle className="font-display text-lg font-bold uppercase tracking-wide">
+              Add Subscription
+            </CardTitle>
+            <p className="font-mono text-xs text-muted-foreground mt-1">
+              Track a new recurring charge
+            </p>
+          </div>
+          <Badge
+            variant="outline"
+            className="font-mono text-[10px] font-bold uppercase tracking-widest hidden sm:inline-flex"
+          >
+            new
+          </Badge>
         </div>
-      )}
+      </CardHeader>
+      
+      <CardContent>
+        <form onSubmit={handleSubmit} className={cn("space-y-5", className)}>
+          {error && (
+            <div className="rounded-lg border-2 border-destructive bg-destructive/10 px-4 py-3 text-sm text-destructive font-mono">
+              {error}
+            </div>
+          )}
 
-      <div className="space-y-2">
-        <Label htmlFor="name">Subscription Name</Label>
-        <Input
-          id="name"
-          name="name"
-          type="text"
-          required
-          placeholder="Netflix, Spotify, etc."
-        />
-      </div>
+          <div className="space-y-2">
+            <Label htmlFor="name" className="font-mono text-xs uppercase tracking-wide">
+              Subscription Name
+            </Label>
+            <Input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Netflix, Spotify, etc."
+              className="font-mono"
+            />
+          </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="price">Price</Label>
-          <Input
-            id="price"
-            name="price"
-            type="number"
-            step="0.01"
-            min="0"
-            required
-            placeholder="9.99"
-          />
-        </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="price" className="font-mono text-xs uppercase tracking-wide">
+                Price
+              </Label>
+              <Input
+                id="price"
+                name="price"
+                type="number"
+                step="0.01"
+                min="0"
+                required
+                placeholder="9.99"
+                className="font-mono"
+              />
+            </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="currency">Currency</Label>
-          <Select name="currency" required>
-            <SelectTrigger id="currency">
-              <SelectValue placeholder="Select currency" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="CAD">CAD ($)</SelectItem>
-              <SelectItem value="USD">USD ($)</SelectItem>
-              <SelectItem value="EUR">EUR (€)</SelectItem>
-              <SelectItem value="GBP">GBP (£)</SelectItem>
-              <SelectItem value="JPY">JPY (¥)</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+            <div className="space-y-2">
+              <Label htmlFor="currency" className="font-mono text-xs uppercase tracking-wide">
+                Currency
+              </Label>
+              <Select name="currency" required>
+                <SelectTrigger id="currency" className="font-mono w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="CAD" className="font-mono">CAD ($)</SelectItem>
+                  <SelectItem value="USD" className="font-mono">USD ($)</SelectItem>
+                  <SelectItem value="EUR" className="font-mono">EUR (€)</SelectItem>
+                  <SelectItem value="GBP" className="font-mono">GBP (£)</SelectItem>
+                  <SelectItem value="JPY" className="font-mono">JPY (¥)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="frequency">Billing Frequency</Label>
-        <Select name="frequency" required>
-          <SelectTrigger id="frequency">
-            <SelectValue placeholder="Select frequency" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="monthly">Monthly</SelectItem>
-            <SelectItem value="yearly">Yearly</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="frequency" className="font-mono text-xs uppercase tracking-wide">
+                Frequency
+              </Label>
+              <Select name="frequency" required>
+                <SelectTrigger id="frequency" className="font-mono w-full">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="monthly" className="font-mono">Monthly</SelectItem>
+                  <SelectItem value="yearly" className="font-mono">Yearly</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="renewalDate">Renewal Date</Label>
-        <Input
-          id="renewalDate"
-          name="renewalDate"
-          type="date"
-          required
-        />
-      </div>
+            <div className="space-y-2">
+              <Label htmlFor="renewalDate" className="font-mono text-xs uppercase tracking-wide">
+                Renewal Date
+              </Label>
+              <Input
+                id="renewalDate"
+                name="renewalDate"
+                type="date"
+                required
+                className="font-mono"
+              />
+            </div>
+          </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="appUrl">App URL</Label>
-        <Input
-          id="appUrl"
-          name="appUrl"
-          type="url"
-          required
-          placeholder="https://example.com"
-        />
-      </div>
+          <div className="space-y-2">
+            <Label htmlFor="appUrl" className="font-mono text-xs uppercase tracking-wide">
+              App URL
+            </Label>
+            <Input
+              id="appUrl"
+              name="appUrl"
+              type="url"
+              required
+              placeholder="https://example.com"
+              className="font-mono"
+            />
+          </div>
 
-      <Button type="submit" disabled={isSubmitting} className="w-full">
-        {isSubmitting ? (
-          <>
-            <Spinner className="mr-2" />
-            Creating...
-          </>
-        ) : (
-          "Create Subscription"
-        )}
-      </Button>
-    </form>
+          <div className="pt-2 border-t border-dashed border-rule">
+            <Button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="w-full"
+              size="cta"
+            >
+              {isSubmitting ? (
+                <>
+                  <Spinner className="mr-2" />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <Plus className="size-4 mr-2" />
+                  Add Subscription
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
   )
 }

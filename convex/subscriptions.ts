@@ -35,3 +35,27 @@ export const listAllSubscription = query({
     return subscriptions
   }
 })
+
+export const deleteSubscription = mutation({
+  args: {
+    id: v.id("subscriptions")
+  },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx)
+    const subscription = await ctx.db.get(args.id)
+    if (userId !== subscription?.userId) {
+      throw new Error("Unauthorized")
+    }
+    ctx.db.delete("subscriptions", subscription._id)
+  }
+})
+
+export const getSubscriptionById = query({
+  args: {
+    id: v.id("subscriptions")
+  },
+  handler: async (ctx, args) => {
+    const subscription = await ctx.db.get(args.id)
+    return subscription
+  }
+})
